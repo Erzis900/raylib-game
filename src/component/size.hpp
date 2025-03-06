@@ -1,8 +1,9 @@
+#include "pch.hpp"
+
 namespace component
 {
     struct size
     {
-        int width;
-        int height;
+        Vector2 vec;
     };
 }

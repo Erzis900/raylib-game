@@ -10,7 +10,7 @@ namespace renderer
         auto view = registry.view<component::position, component::size, component::color>();
         for (auto [rectangle, position, size, color] : view.each())
         {
-            DrawRectangle(position.x, position.y, size.width, size.height, color.data);
+            DrawRectangleLines(position.vec.x, position.vec.y, size.vec.x, size.vec.y, color.data);
         }
     }
 }

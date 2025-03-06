@@ -2,6 +2,20 @@
 #include "player/entity/player.hpp"
 #include "system/drawRectangle.hpp"
 #include "player/system/move.hpp"
+#include "system/drawAnimation.hpp"
+#include "system/updateAnimFrame.hpp"
+
+void update(entt::registry &registry, float dt)
+{
+    player::move(registry, dt);
+    systems::updateAnimFrame(registry, dt);
+}
+
+void render(entt::registry &registry)
+{
+    renderer::drawAnimation(registry);
+    renderer::drawRectangle(registry);
+}
 
 int main(void)
 {
@@ -18,17 +32,17 @@ int main(void)
     while (!WindowShouldClose())
     {
         float dt = GetFrameTime();
-        player::move(registry, dt);
+        update(registry, dt);
 
         BeginDrawing();
             ClearBackground(BLACK);
-            renderer::drawRectangle(registry);
-            // DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+            render(registry);
+
+            DrawText(TextFormat("FPS: %d", GetFPS()), 0, 0, 20, LIGHTGRAY);
         EndDrawing();
     }
 
     CloseWindow();
-
 
     return 0;
 }

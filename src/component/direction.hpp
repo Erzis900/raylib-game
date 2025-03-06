@@ -1,6 +1,8 @@
+#include "pch.hpp"
+
 namespace component
 {
-    struct position
+    struct direction
     {
         Vector2 vec;
     };
