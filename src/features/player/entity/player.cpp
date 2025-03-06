@@ -7,6 +7,7 @@
 #include "player/component/isPlayer.hpp"
 #include "player/component/state.hpp"
 #include "component/animation.hpp"
+#include "player/component/facing.hpp"
 
 namespace player
 {
@@ -15,7 +16,7 @@ namespace player
         entt::entity player = registry.create();
 
         float scale = 4.f;
-        Vector2 frameSize = {48.f, 48.f};
+        Vector2 frameSize = {64.f, 64.f};
 
         registry.emplace<player::isPlayer>(player);
         registry.emplace<component::position>(player, 50.f, 50.f);
@@ -23,14 +24,15 @@ namespace player
         registry.emplace<component::speed>(player, 200.f);
         registry.emplace<component::direction>(player, 0.f, 0.f);
         registry.emplace<component::color>(player, GREEN);
-        registry.emplace<player::state>(player, player::state::idle);
+        registry.emplace<player::state>(player, state::idle);
+        registry.emplace<player::facing>(player, facing::down);
 
         float frameTime = 0.1f;
-        int frameCount = 6;
+        int frameCount = 4;
         bool loop = true;
         Rectangle frameRec = {0, 0, frameSize.x, frameSize.y};
 
-        registry.emplace<component::animation>(player, LoadTexture("assets/player/player.png"), frameSize, frameRec, frameTime, frameCount, 0, 0, scale, loop);
+        registry.emplace<component::animation>(player, LoadTexture("assets/player/idlewalk.png"), frameSize, frameRec, frameTime, frameCount, 0, 0, scale, loop);
 
         return player;
     }

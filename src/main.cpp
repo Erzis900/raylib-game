@@ -35,7 +35,7 @@ int main(void)
         update(registry, dt);
 
         BeginDrawing();
-            ClearBackground(BLACK);
+            ClearBackground(GRAY);
             render(registry);
 
             DrawText(TextFormat("FPS: %d", GetFPS()), 0, 0, 20, LIGHTGRAY);

@@ -1,12 +1,13 @@
 #include "updateAnimFrame.hpp"
 #include "component/animation.hpp"
+#include "player/component/state.hpp"
 
 namespace systems
 {
     void updateAnimFrame(entt::registry &registry, float dt)
     {
-        auto view = registry.view<component::animation>();
-        for (auto [entity, animation] : view.each())
+        auto view = registry.view<component::animation, player::state>();
+        for (auto [entity, animation, state] : view.each())
         {
             animation.elapsedTime += dt;
             if (animation.elapsedTime >= animation.frameTime)
@@ -19,7 +20,7 @@ namespace systems
                     animation.frameCurrent = 0;
                 }
 
-                animation.frameRec = {animation.frameCurrent * animation.frameSize.x, 0, animation.frameSize.x, animation.frameSize.y};
+                animation.frameRec = {animation.frameCurrent * animation.frameSize.x, static_cast<float>(state.currentState) * animation.frameSize.y, animation.frameSize.x, animation.frameSize.y};
             }
         }
     }
