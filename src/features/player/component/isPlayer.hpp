@@ -1,0 +1,4 @@
+namespace player
+{
+    struct isPlayer {};
+}

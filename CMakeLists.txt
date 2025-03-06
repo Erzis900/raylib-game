@@ -61,13 +61,14 @@ add_git_dependency(
 # Define PROJECT_src as a list of all source files
 file(GLOB_RECURSE PROJECT_src CONFIGURE_DEPENDS "${CMAKE_CURRENT_LIST_DIR}/src/*.cpp")
 
-# Define PROJECT_INCLUDE to be the path to the include directory of the project
-set(PROJECT_INCLUDE "${CMAKE_CURRENT_LIST_DIR}/src/")
-
 # Declaring our executable
 add_executable(${PROJECT_NAME})
+target_precompile_headers(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_LIST_DIR}/src/pch.hpp")
 target_sources(${PROJECT_NAME} PRIVATE ${PROJECT_src})
-target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_INCLUDE})
+target_include_directories(${PROJECT_NAME} PRIVATE 
+    "${CMAKE_CURRENT_LIST_DIR}/src/"
+    "${CMAKE_CURRENT_LIST_DIR}/src/features/"
+    "${CMAKE_CURRENT_LIST_DIR}/external/")
 
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 target_link_libraries(${PROJECT_NAME} PRIVATE LDtkLoader::LDtkLoader)
