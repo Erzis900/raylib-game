@@ -12,6 +12,7 @@
 #include "system/drawAnimation.hpp"
 #include "system/drawRectangle.hpp"
 #include "system/updateAnimFrame.hpp"
+#include "resources.hpp"
 
 void update(entt::registry &registry, float dt)
 {
@@ -31,8 +32,12 @@ int main(void)
 	InitWindow(constants::screenWidth, constants::screenHeight, "raylib game");
 	SetTargetFPS(240);
 
+    // ToggleBorderlessWindowed();
+
 	RenderTexture2D target = LoadRenderTexture(constants::screenWidth, constants::screenHeight);
 	SetTextureFilter(target.texture, TEXTURE_FILTER_BILINEAR);
+
+    resources::load();
 
 	GuiGameLayoutState state = InitGuiGameLayout();
 	gui::initLogic(&state);
@@ -58,11 +63,11 @@ int main(void)
 		SetMouseScale(1 / scale, 1 / scale);
 
 		BeginTextureMode(target);
-		ClearBackground(GRAY);
-		render(registry);
+            ClearBackground(GRAY);
+            render(registry);
 
-		DrawText(TextFormat("FPS: %d", GetFPS()), 0, 0, 20, LIGHTGRAY);
-		GuiGameLayout(&state);
+            DrawText(TextFormat("FPS: %d", GetFPS()), 0, 0, 20, LIGHTGRAY);
+            GuiGameLayout(&state);
 		EndTextureMode();
 
 		BeginDrawing();
@@ -75,6 +80,7 @@ int main(void)
 		EndDrawing();
 	}
 
+    resources::unload();
 	CloseWindow();
 
 	return 0;

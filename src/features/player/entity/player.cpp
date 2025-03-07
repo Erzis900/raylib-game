@@ -8,6 +8,7 @@
 #include "player/component/state.hpp"
 #include "component/animation.hpp"
 #include "player/component/facing.hpp"
+#include "resources.hpp"
 
 namespace player
 {
@@ -32,7 +33,7 @@ namespace player
         bool loop = true;
         Rectangle frameRec = {0, 0, frameSize.x, frameSize.y};
 
-        registry.emplace<component::animation>(player, LoadTexture("assets/player/idlewalk.png"), frameSize, frameRec, frameTime, frameCount, 0, 0, scale, loop);
+        registry.emplace<component::animation>(player, resources::idlewalk, frameSize, frameRec, frameTime, frameCount, 0, 0, scale, loop);
 
         return player;
     }

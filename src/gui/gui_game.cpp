@@ -53,12 +53,14 @@ namespace gui
         static bool prevState = false;
         if(state->CheckBoxFSChecked && !prevState)
         {   
-            ToggleFullscreen();
+            ToggleBorderlessWindowed();
+            // ToggleFullscreen();
             prevState = true;
         }
         else if(!state->CheckBoxFSChecked && prevState)
         {
-            ToggleFullscreen();
+            // ToggleFullscreen();
+            ToggleBorderlessWindowed();
             Vector2 res = getRes(state->DropdownBoxResActive);
             SetWindowSize(res.x, res.y);
 
