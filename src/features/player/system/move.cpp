@@ -4,13 +4,14 @@
 #include "component/position.hpp"
 #include "component/speed.hpp"
 #include "component/direction.hpp"
+#include "component/hitbox.hpp"
 
 namespace player
 {
     void move(entt::registry &registry, float dt)
     {
-        auto view = registry.view<player::isPlayer, component::position, component::speed, component::direction, player::state>();
-        for (auto [player, position, speed, direction, state] : view.each())
+        auto view = registry.view<player::isPlayer, component::position, component::speed, component::direction, player::state, component::hitbox>();
+        for (auto [player, position, speed, direction, state, hitbox] : view.each())
         {
             if(IsKeyDown(KEY_W)) direction.vec.y -= 1;
             if(IsKeyDown(KEY_S)) direction.vec.y += 1;
@@ -44,6 +45,8 @@ namespace player
             }
 
             registry.replace<component::position>(player, position.vec.x + direction.vec.x * speed.value * dt,  position.vec.y + direction.vec.y * speed.value * dt);
+            registry.replace<component::hitbox>(player, Rectangle(hitbox.rect.x + direction.vec.x * speed.value * dt, hitbox.rect.y + direction.vec.y * speed.value * dt, hitbox.rect.width, hitbox.rect.height));
+
             registry.replace<component::direction>(player, Vector2(0, 0));
         }
     }

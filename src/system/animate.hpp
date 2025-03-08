@@ -2,5 +2,5 @@
 
 namespace systems
 {
-    void updateAnimFrame(entt::registry &registry, float dt);
+    void animate(entt::registry &registry, float dt);
 }

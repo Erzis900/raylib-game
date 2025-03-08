@@ -10,16 +10,16 @@
 #include "player/entity/player.hpp"
 #include "player/system/move.hpp"
 #include "resources.hpp"
+#include "system/animate.hpp"
 #include "system/drawAnimation.hpp"
 #include "system/drawRectangle.hpp"
-#include "system/animate.hpp"
 
 #include "map.hpp"
 
 void update(entt::registry &registry, float dt)
 {
 	player::move(registry, dt);
-	systems::updateAnimFrame(registry, dt);
+	systems::animate(registry, dt);
 }
 
 void render(entt::registry &registry)
@@ -33,7 +33,7 @@ int main(void)
 	SetTraceLogLevel(LOG_ERROR);
 	// SetConfigFlags(FLAG_WINDOW_RESIZABLE);
 	InitWindow(constants::screenWidth, constants::screenHeight, "raylib game");
-	SetTargetFPS(240);
+	SetTargetFPS(constants::fps);
 
 	Map map("assets/map/map.ldtk");
 	map.initRenderTexture();
@@ -74,11 +74,11 @@ int main(void)
 
 		BeginDrawing();
 			ClearBackground(BLACK);
-			DrawTexturePro(target.texture, (Rectangle){0.0f, 0.0f, (float) target.texture.width, (float) -target.texture.height},
-						(Rectangle){(GetScreenWidth() - ((float) constants::screenWidth * scale)) * 0.5f,
-									(GetScreenHeight() - ((float) constants::screenHeight * scale)) * 0.5f, (float) constants::screenWidth * scale,
-									(float) constants::screenHeight * scale},
-						(Vector2){0, 0}, 0.0f, WHITE);
+			Rectangle src = {0.f, 0.f, static_cast<float>(target.texture.width), static_cast<float>(-target.texture.height)};
+			Rectangle dest = {(GetScreenWidth() - (static_cast<float>(constants::screenWidth) * scale)) / 2.f,
+							(GetScreenHeight() - (static_cast<float>(constants::screenHeight) * scale)) / 2.f, static_cast<float>(constants::screenWidth) * scale,
+							static_cast<float>(constants::screenHeight) * scale};
+			DrawTexturePro(target.texture, src, dest, Vector2(0, 0), 0.f, WHITE);
 		EndDrawing();
 	}
 

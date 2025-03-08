@@ -4,7 +4,7 @@
 
 namespace systems
 {
-    void updateAnimFrame(entt::registry &registry, float dt)
+    void animate(entt::registry &registry, float dt)
     {
         auto view = registry.view<component::animation, player::state>();
         for (auto [entity, animation, state] : view.each())
