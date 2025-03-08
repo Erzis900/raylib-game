@@ -1,4 +1,4 @@
-#include "updateAnimFrame.hpp"
+#include "animate.hpp"
 #include "component/animation.hpp"
 #include "player/component/state.hpp"
 

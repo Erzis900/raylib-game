@@ -3,6 +3,7 @@
 
 #include "fmt/core.h"
 #include "box2d/box2d.h"
+#include "LDtkLoader/Project.hpp"
 
 #include "entt/entt.hpp"
 

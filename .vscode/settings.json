@@ -5,6 +5,10 @@
         "string_view": "cpp",
         "ranges": "cpp",
         "span": "cpp",
-        "source_location": "cpp"
+        "source_location": "cpp",
+        "chrono": "cpp",
+        "text_encoding": "cpp",
+        "typeindex": "cpp",
+        "typeinfo": "cpp"
     }
 }

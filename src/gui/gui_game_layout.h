@@ -37,8 +37,6 @@ typedef struct {
     bool DropdownBoxResEditMode;
     int DropdownBoxResActive;
 
-    Rectangle layoutRecs[4];
-
     // Custom state variables (depend on development software)
     // NOTE: This variables should be added manually if required
 
@@ -102,11 +100,6 @@ GuiGameLayoutState InitGuiGameLayout(void)
     state.DropdownBoxResEditMode = false;
     state.DropdownBoxResActive = 0;
 
-    state.layoutRecs[0] = (Rectangle){ 0, 24, 96, 24 };
-    state.layoutRecs[1] = (Rectangle){ 600, 264, 400, 312 };
-    state.layoutRecs[2] = (Rectangle){ 624, 312, 24, 24 };
-    state.layoutRecs[3] = (Rectangle){ 624, 360, 120, 24 };
-
     // Custom variables initialization
 
     return state;
@@ -118,11 +111,11 @@ void GuiGameLayout(GuiGameLayoutState *state)
 
     if (state->WindowBoxSettingsActive)
     {
-        state->WindowBoxSettingsActive = !GuiWindowBox(state->layoutRecs[1], "Settings");
-        GuiCheckBox(state->layoutRecs[2], "Full screen", &state->CheckBoxFSChecked);
-        if (GuiDropdownBox(state->layoutRecs[3], "1280x720;1600x900;1920x1080", &state->DropdownBoxResActive, state->DropdownBoxResEditMode)) state->DropdownBoxResEditMode = !state->DropdownBoxResEditMode;
+        state->WindowBoxSettingsActive = !GuiWindowBox((Rectangle){ 600, 264, 400, 312 }, "Settings");
+        GuiCheckBox((Rectangle){ 632, 312, 24, 24 }, "Full screen", &state->CheckBoxFSChecked);
+        if (GuiDropdownBox((Rectangle){ 624, 360, 120, 24 }, "1280x720;1600x900;1920x1080", &state->DropdownBoxResActive, state->DropdownBoxResEditMode)) state->DropdownBoxResEditMode = !state->DropdownBoxResEditMode;
     }
-    state->ButtonSettingsPressed = GuiButton(state->layoutRecs[0], "Settings"); 
+    state->ButtonSettingsPressed = GuiButton((Rectangle){ 0, 24, 96, 24 }, "Settings"); 
     
     GuiUnlock();
 }

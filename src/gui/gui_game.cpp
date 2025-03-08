@@ -27,7 +27,7 @@ namespace gui
                 vec = {1280, 720};
                 break;
             case 1:
-                vec = {1600, 900};
+                vec = {1600, 896};
                 break;
             case 2:
                 vec = {1920, 1080};
