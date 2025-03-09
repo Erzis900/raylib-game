@@ -44,7 +44,6 @@ void Map::initRenderTexture()
 			int height = gridSize.y;
 
             int collision = 1;
-
             
 			for (int row = 0; row < height; row++)
 			{

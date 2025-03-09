@@ -9,7 +9,9 @@
 #include "component/animation.hpp"
 #include "player/component/facing.hpp"
 #include "resources.hpp"
-#include "component/hitbox.hpp"
+// #include "component/hitbox.hpp"
+#include "player/component/collider.hpp"
+#include "constants.hpp"
 
 namespace player
 {
@@ -19,15 +21,16 @@ namespace player
 
         float scale = 4.f;
         Vector2 frameSize = {64.f, 64.f};
-        Vector2 position = {0.f, 0.f};
+        Vector2 position = {constants::screenWidth / 2, constants::screenHeight / 2};
 
-        Rectangle hitbox = {position.x - frameSize.x / 4, position.y - frameSize.y / 4 + 9, 32, 16};
+        Rectangle collider = {position.x - frameSize.x / 4, position.y - frameSize.y / 4 + 9, 32, 16};
 
         registry.emplace<player::isPlayer>(player);
         registry.emplace<component::position>(player, position.x, position.y);
         registry.emplace<component::size>(player, frameSize.x * scale, frameSize.y * scale);
-        registry.emplace<component::hitbox>(player, hitbox);
-        registry.emplace<component::speed>(player, 200.f);
+        // registry.emplace<component::hitbox>(player, hitbox);
+        registry.emplace<player::collider>(player, collider);
+        registry.emplace<component::speed>(player, 400.f);
         registry.emplace<component::direction>(player, 0.f, 0.f);
         registry.emplace<component::color>(player, BLUE);
         registry.emplace<player::state>(player, state::idle);

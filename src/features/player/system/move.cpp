@@ -4,14 +4,15 @@
 #include "component/position.hpp"
 #include "component/speed.hpp"
 #include "component/direction.hpp"
-#include "component/hitbox.hpp"
+// #include "component/hitbox.hpp"
+#include "player/component/collider.hpp"
 
 namespace player
 {
     void move(entt::registry &registry, float dt)
     {
-        auto view = registry.view<player::isPlayer, component::position, component::speed, component::direction, player::state, component::hitbox>();
-        for (auto [player, position, speed, direction, state, hitbox] : view.each())
+        auto view = registry.view<player::isPlayer, component::position, component::speed, component::direction, player::state, player::collider>();
+        for (auto [player, position, speed, direction, state, collider] : view.each())
         {
             if(IsKeyDown(KEY_W)) direction.vec.y -= 1;
             if(IsKeyDown(KEY_S)) direction.vec.y += 1;
@@ -44,8 +45,9 @@ namespace player
                 registry.replace<player::state>(player, state::walk_back);
             }
 
-            registry.replace<component::position>(player, position.vec.x + direction.vec.x * speed.value * dt,  position.vec.y + direction.vec.y * speed.value * dt);
-            registry.replace<component::hitbox>(player, Rectangle(hitbox.rect.x + direction.vec.x * speed.value * dt, hitbox.rect.y + direction.vec.y * speed.value * dt, hitbox.rect.width, hitbox.rect.height));
+            Vector2 newPos = {position.vec.x + direction.vec.x * speed.value * dt, position.vec.y + direction.vec.y * speed.value * dt};
+            registry.replace<component::position>(player, newPos.x, newPos.y);
+            registry.replace<player::collider>(player, Rectangle(newPos.x - collider.rect.width / 2, newPos.y - collider.rect.height / 2, collider.rect.width, collider.rect.height));
 
             registry.replace<component::direction>(player, Vector2(0, 0));
         }
