@@ -10,6 +10,7 @@
 #include "player/entity/player.hpp"
 #include "player/system/move.hpp"
 #include "player/system/checkBorderCollision.hpp"
+#include "player/system/checkMapCollision.hpp"
 
 #include "resources.hpp"
 #include "system/animate.hpp"
@@ -20,15 +21,17 @@
 
 void update(entt::registry &registry, float dt)
 {
-	player::move(registry, dt);
+	player::checkMapCollision(registry);
 	player::checkBorderCollision(registry, constants::screenWidth, constants::screenHeight);
+	player::move(registry, dt);
+
 	systems::animate(registry, dt);
 }
 
 void render(entt::registry &registry)
 {
-	renderer::drawAnimation(registry);
 	renderer::drawRectangle(registry);
+	renderer::drawAnimation(registry);
 }
 
 int main(void)
@@ -37,9 +40,6 @@ int main(void)
 	// SetConfigFlags(FLAG_WINDOW_RESIZABLE);
 	InitWindow(constants::screenWidth, constants::screenHeight, "raylib game");
 	SetTargetFPS(constants::fps);
-
-	Map map("assets/map/map.ldtk");
-	map.initRenderTexture();
 
 	// ToggleBorderlessWindowed();
 
@@ -52,6 +52,9 @@ int main(void)
 	gui::initLogic(&state);
 
 	entt::registry registry;
+	Map map("assets/map/map.ldtk");
+	map.initRenderTexture(registry);
+	
 	player::createPlayer(registry);
 
 	while (!WindowShouldClose())

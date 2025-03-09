@@ -1,6 +1,6 @@
 #include "pch.hpp"
 
-namespace player
+namespace component
 {
     struct collider
     {

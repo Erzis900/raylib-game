@@ -1,5 +1,7 @@
 #include "map.hpp"
 #include "constants.hpp"
+#include "component/collider.hpp"
+#include "component/color.hpp"
 
 Map::Map(const std::string &projectPath)
 {
@@ -7,7 +9,16 @@ Map::Map(const std::string &projectPath)
 	scale = 4.f;
 }
 
-void Map::initRenderTexture()
+entt::entity Map::createCollider(entt::registry &registry, Rectangle collider)
+{
+	auto entity = registry.create();
+	registry.emplace<component::collider>(entity, collider);
+	registry.emplace<component::color>(entity, RED);
+
+	return entity;
+}
+
+void Map::initRenderTexture(entt::registry &registry)
 {
 	const auto &world = ldtkProject.getWorld();
 	const auto &level = world.getLevel("Level_0");
@@ -43,16 +54,20 @@ void Map::initRenderTexture()
 			int width = gridSize.x;
 			int height = gridSize.y;
 
+			float colliderSize = 64.f;
             int collision = 1;
             
-			for (int row = 0; row < height; row++)
+			for (int row = 0; row < width; row++)
 			{
-				for (int col = 0; col < width; col++)
+				for (int col = 0; col < height; col++)
 				{
 					int value = layer.getIntGridVal(row, col).value;
+
                     if (value == collision)
                     {
-                        fmt::print("Coll at ({}, {}): {}\n", row, col, value);
+						fmt::print("Coll at ({}, {}): {}\n", row, col, value);
+						Rectangle mapCollider = {static_cast<float>(row * colliderSize), static_cast<float>(col * colliderSize), colliderSize, colliderSize};
+						createCollider(registry, mapCollider);
                     }
 				}
 			}

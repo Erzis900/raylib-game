@@ -10,7 +10,7 @@
 #include "player/component/facing.hpp"
 #include "resources.hpp"
 // #include "component/hitbox.hpp"
-#include "player/component/collider.hpp"
+#include "component/collider.hpp"
 #include "constants.hpp"
 
 namespace player
@@ -29,7 +29,7 @@ namespace player
         registry.emplace<component::position>(player, position.x, position.y);
         registry.emplace<component::size>(player, frameSize.x * scale, frameSize.y * scale);
         // registry.emplace<component::hitbox>(player, hitbox);
-        registry.emplace<player::collider>(player, collider);
+        registry.emplace<component::collider>(player, collider);
         registry.emplace<component::speed>(player, 400.f);
         registry.emplace<component::direction>(player, 0.f, 0.f);
         registry.emplace<component::color>(player, BLUE);

@@ -1,13 +1,13 @@
 #include "checkBorderCollision.hpp"
 #include "component/direction.hpp"
 #include "component/position.hpp"
-#include "player/component/collider.hpp"
+#include "component/collider.hpp"
 
 namespace player
 {
 	void checkBorderCollision(entt::registry &registry, int screenWidth, int screenHeight)
 	{
-		auto view = registry.view<component::position, player::collider>();
+		auto view = registry.view<component::position, component::collider>();
 		for (auto [player, position, collider] : view.each())
 		{
 			if (collider.rect.x + collider.rect.width >= screenWidth)
