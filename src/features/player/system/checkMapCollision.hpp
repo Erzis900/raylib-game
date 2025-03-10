@@ -2,5 +2,5 @@
 
 namespace player
 {
-    void checkMapCollision(entt::registry &registry);
+    void checkMapCollision(entt::registry &registry, int screenWidth, int screenHeight);
 }

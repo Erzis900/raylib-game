@@ -6,11 +6,28 @@
 
 namespace player
 {
-	void checkMapCollision(entt::registry &registry)
+	void checkMapCollision(entt::registry &registry, int screenWidth, int screenHeight)
 	{
 		auto playerView = registry.view<player::isPlayer, component::collider, component::position>();
 		for (auto [player, playerCollider, playerPosition] : playerView.each())
 		{
+			if (playerCollider.rect.x + playerCollider.rect.width >= screenWidth)
+            {
+                registry.replace<component::position>(player, screenWidth - playerCollider.rect.width / 2, playerPosition.vec.y);
+            }
+            else if (playerCollider.rect.x <= 0.f) 
+            {
+                registry.replace<component::position>(player, playerCollider.rect.width / 2, playerPosition.vec.y);
+            }
+            if (playerCollider.rect.y <= 0.f)
+            {
+                registry.replace<component::position>(player, playerPosition.vec.x, playerCollider.rect.height / 2);
+            }
+			else if (playerCollider.rect.y + playerCollider.rect.height >= screenHeight)
+            {
+                registry.replace<component::position>(player, playerPosition.vec.x, screenHeight - playerCollider.rect.height / 2);
+            }
+
 			auto view = registry.view<component::collider>();
 			for (auto [entity, collider] : view.each())
 			{
@@ -47,6 +64,7 @@ namespace player
 					}
 				}
 			}
+			registry.replace<component::collider>(player, Rectangle(playerPosition.vec.x - playerCollider.rect.width / 2, playerPosition.vec.y - playerCollider.rect.height / 2, playerCollider.rect.width, playerCollider.rect.height));
 		}
 	}
 }  // namespace player

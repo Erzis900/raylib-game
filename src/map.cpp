@@ -65,7 +65,7 @@ void Map::initRenderTexture(entt::registry &registry)
 
                     if (value == collision)
                     {
-						fmt::print("Coll at ({}, {}): {}\n", row, col, value);
+						// fmt::print("Coll at ({}, {}): {}\n", row, col, value);
 						Rectangle mapCollider = {static_cast<float>(row * colliderSize), static_cast<float>(col * colliderSize), colliderSize, colliderSize};
 						createCollider(registry, mapCollider);
                     }

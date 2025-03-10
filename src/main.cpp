@@ -9,7 +9,6 @@
 #include "constants.hpp"
 #include "player/entity/player.hpp"
 #include "player/system/move.hpp"
-#include "player/system/checkBorderCollision.hpp"
 #include "player/system/checkMapCollision.hpp"
 
 #include "resources.hpp"
@@ -21,9 +20,8 @@
 
 void update(entt::registry &registry, float dt)
 {
-	player::checkMapCollision(registry);
-	player::checkBorderCollision(registry, constants::screenWidth, constants::screenHeight);
 	player::move(registry, dt);
+	player::checkMapCollision(registry, constants::screenWidth, constants::screenHeight);
 
 	systems::animate(registry, dt);
 }

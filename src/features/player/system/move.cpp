@@ -12,7 +12,7 @@ namespace player
     void move(entt::registry &registry, float dt)
     {
         auto view = registry.view<player::isPlayer, component::position, component::speed, component::direction, player::state, component::collider>();
-        for (auto [player, position, speed, direction, state, collider] : view.each())
+        for (auto [player, position, speed, direction, state, playerCollider] : view.each())
         {
             if(IsKeyDown(KEY_W)) direction.vec.y -= 1;
             if(IsKeyDown(KEY_S)) direction.vec.y += 1;
@@ -47,8 +47,7 @@ namespace player
 
             Vector2 newPos = {position.vec.x + direction.vec.x * speed.value * dt, position.vec.y + direction.vec.y * speed.value * dt};
             registry.replace<component::position>(player, newPos.x, newPos.y);
-            registry.replace<component::collider>(player, Rectangle(newPos.x - collider.rect.width / 2, newPos.y - collider.rect.height / 2, collider.rect.width, collider.rect.height));
-
+            registry.replace<component::collider>(player, Rectangle(newPos.x - playerCollider.rect.width / 2, newPos.y - playerCollider.rect.height / 2, playerCollider.rect.width, playerCollider.rect.height));
             registry.replace<component::direction>(player, Vector2(0, 0));
         }
     }
