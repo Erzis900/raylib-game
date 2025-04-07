@@ -12,8 +12,7 @@ Map::Map(const std::string &projectPath)
 entt::entity Map::createCollider(entt::registry &registry, Rectangle collider)
 {
 	auto entity = registry.create();
-	registry.emplace<component::collider>(entity, collider);
-	registry.emplace<component::color>(entity, RED);
+	registry.emplace<component::collider>(entity, collider, RED);
 
 	return entity;
 }

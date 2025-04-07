@@ -64,7 +64,7 @@ namespace player
 					}
 				}
 			}
-			registry.replace<component::collider>(player, Rectangle(playerPosition.vec.x - playerCollider.rect.width / 2, playerPosition.vec.y - playerCollider.rect.height / 2, playerCollider.rect.width, playerCollider.rect.height));
+			registry.replace<component::collider>(player, Rectangle(playerPosition.vec.x - playerCollider.rect.width / 2, playerPosition.vec.y - playerCollider.rect.height / 2, playerCollider.rect.width, playerCollider.rect.height), playerCollider.color);
 		}
 	}
 }  // namespace player

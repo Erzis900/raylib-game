@@ -5,5 +5,6 @@ namespace component
     struct hitbox
     {
         Rectangle rect;
+        Color color;
     };
 }
